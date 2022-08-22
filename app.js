@@ -1,16 +1,22 @@
+// Récuperation du module express
 const express = require("express");
 const app = express();
-const stuffRoutes = require("./routes/stuff");
-const userRoutes = require('./routes/user');
+
+//Récuperation du module mongoose
+const mongoose = require("mongoose");
+
+// Récupération des chemin (GET, POST, PUT, DELETE) pour les sauces
+const saucePath = require("./path/saucePath");
+//Récuperation des chemins POST pour la connection et la création de comptes
+const userPath = require('./path/userPath');
 const path = require('path');
 
 app.use(express.json());
 
-const mongoose = require("mongoose");
+
 
 mongoose
-  .connect(
-    "mongodb+srv://TraanUsers:magedeguerre2256@cluster0.yayhpt7.mongodb.net/?retryWrites=true&w=majority",
+  .connect("mongodb+srv://TraanUsers:magedeguerre2256@cluster0.yayhpt7.mongodb.net/?retryWrites=true&w=majority",
     { useNewUrlParser: true, useUnifiedTopology: true }
   )
   .then(() => console.log("Connexion à MongoDB réussie !"))
@@ -28,8 +34,8 @@ app.use((req, res, next) => {
   );
   next();
 });
-app.use('/api/stuff', stuffRoutes);
-app.use('/api/auth', userRoutes);
+app.use('/api/sauces', saucePath);
+app.use('/api/auth', userPath);
 app.use('/images', express.static(path.join(__dirname, 'images')));
 
 module.exports = app;
