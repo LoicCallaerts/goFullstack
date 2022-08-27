@@ -10,7 +10,9 @@ const saucePath = require("./path/saucePath");
 //Récuperation des chemins POST pour la connection et la création de comptes
 const userPath = require('./path/userPath');
 const path = require('path');
+const { default: helmet } = require("helmet");
 
+app.use(helmet())
 app.use(express.json());
 
 

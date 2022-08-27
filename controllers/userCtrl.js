@@ -2,6 +2,9 @@ const bcrypt = require("bcrypt");
 const User = require("../models/user");
 const jwt = require('jsonwebtoken');
 
+// ^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$ mail
+// ^(?=.*[0-9])(?=.*[az])(?=.*[AZ])(?=.*[@#$%^&-+=() ])(?=\\S+$).{8, 15}$ mot de passe 
+
 exports.signup = (req, res, next) => {
     bcrypt.hash(req.body.password, 10)
       .then(hash => {
