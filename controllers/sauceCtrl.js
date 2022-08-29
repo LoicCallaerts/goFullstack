@@ -60,6 +60,9 @@ exports.modifySauce = (req, res, next) => {
   if (req.file) {
     Sauce.findOne({ _id: req.params.id })
         .then(sauce => {
+          if (sauce.userId != req.auth.userId) {
+            res.status(401).json({ message: "Not authorized" });
+          } else {
             const filename = sauce.imageUrl.split('/images/')[1];
             fs.unlink(`images/${filename}`, () => {
                 const sauceObject = req.file ?
@@ -71,9 +74,9 @@ exports.modifySauce = (req, res, next) => {
                     .then(() => res.status(200).json({ message: 'Sauce modifiée !'}))
                     .catch(error => req.status(400).json({error}));
             })
-        })
+        }})
         .catch(error => res.status(500).json({ error }));
-} 
+}
 else {
     const sauceObject = {...req.body};
     Sauce.updateOne({_id: req.params.id}, {...sauceObject, _id: req.params.id})

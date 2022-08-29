@@ -28,6 +28,6 @@ router.put("/:id", auth, multer, sauceCtrl.modifySauce);
 router.delete("/:id", auth, sauceCtrl.deleteSauce);
 
 // Chemin like ou dislike d'une sauce
-router.post('/:id/like', auth, multer, sauceCtrl.likeAndDislikeSauces)
+router.post('/:id/like', multer, sauceCtrl.likeAndDislikeSauces)
 
 module.exports = router;
