@@ -107,6 +107,7 @@ exports.deleteSauce = (req, res, next) => {
     });
 };
 
+// Logique d'ajout de like/dislike + suppression du like/dislike et vérification par ID de la personne qui like
 exports.likeAndDislikeSauces = (req, res, next) => {
 
   if (req.body.like === 1) {  
