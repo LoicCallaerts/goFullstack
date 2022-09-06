@@ -2,6 +2,8 @@
 const express = require("express");
 const app = express();
 
+const fs = require("fs");
+
 //Récuperation du module mongoose
 const mongoose = require("mongoose");
 

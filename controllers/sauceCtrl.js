@@ -40,6 +40,7 @@ exports.createSauce = (req, res, next) => {
   const sauce = new Sauce({
     ...sauceObject,
     userId: req.auth.userId,
+    // Création de l'URL de l'image, protocol : http, host : 300, /images/ pour image, file name pour son nom
     imageUrl: `${req.protocol}://${req.get("host")}/images/${
       req.file.filename
     }`,
@@ -57,12 +58,16 @@ exports.createSauce = (req, res, next) => {
 
 // Logique de modification d'une sauce
 exports.modifySauce = (req, res, next) => {
+  // recuperation du fichier
   if (req.file) {
+    // Instruction trouver une sauce par son ID
     Sauce.findOne({ _id: req.params.id })
       .then((sauce) => {
+        // Si l'userID est different de l'utilisateur actuellement authentifié, erreur
         if (sauce.userId != req.auth.userId) {
           res.status(401).json({ message: "Not authorized" });
         } else {
+          //Sinon supression de l'image et de son nom
           const filename = sauce.imageUrl.split("/images/")[1];
           fs.unlink(`images/${filename}`, () => {
             const sauceObject = req.file
@@ -84,6 +89,7 @@ exports.modifySauce = (req, res, next) => {
       })
       .catch((error) => res.status(500).json({ error }));
   } else {
+    // Sinon recuperation de tous les élément du body, et update de l'ID de la sauce et et de l'objet sauce
     const sauceObject = { ...req.body };
     Sauce.updateOne(
       { _id: req.params.id },
