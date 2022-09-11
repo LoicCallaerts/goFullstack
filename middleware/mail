@@ -1,8 +1,0 @@
-const Verifier = require("email-verifier");
-
-let verifier = new Verifier("at_l1BUlmzRPCrWnnKeTUqgDPrbmiAWn");
-
-verifier.verify("r@rdegges.com", (err, data) => {
-  if (err) throw err;
-  console.log(data);
-});

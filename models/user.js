@@ -5,7 +5,15 @@ const uniqueValidator = require("mongoose-unique-validator");
 
 // Création du schéma user avec email et mot de passe
 const userSchema = mongoose.Schema({
-  email: { type: String, require: true, unique: true },
+  email: {
+    type: String,
+    require: true,
+    unique: true,
+    match: [
+      /^[a-zA-Z0-9.-_]+[@]{1}[a-zA-Z0-9.-_]+[.]{1}[a-z]{2,10}$/,
+      "Une adress mail valide est requise",
+    ],
+  },
   password: { type: String, require: true },
 });
 
